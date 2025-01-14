@@ -15,7 +15,7 @@ const MockRepository = () => {
 };
 
 describe("Check stock usecase unit test", () => {
-  it("should return the product stock by id", async () => {
+  it("should get stock of a product", async () => {
     const productRepository = MockRepository();
     const usecase = new CheckStockUseCase(productRepository);
 
@@ -24,6 +24,7 @@ describe("Check stock usecase unit test", () => {
     };
     const result = await usecase.execute(input);
 
+    expect(productRepository.find).toHaveBeenCalled();
     expect(result.productId).toEqual(product.id.value);
     expect(result.stock).toEqual(5);
   });
