@@ -22,7 +22,7 @@ const invoice = new Invoice({
     complement: "Teste",
     city: "City",
     state: "State",
-    zipcode: "928392",
+    zipCode: "928392",
   }),
   items: [invoiceItem1, invoiceItem2],
 });

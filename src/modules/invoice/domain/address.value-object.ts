@@ -6,7 +6,7 @@ type AddressProps = {
   complement: string;
   city: string;
   state: string;
-  zipcode: string;
+  zipCode: string;
 };
 
 export default class Address implements ValueObject {
@@ -23,7 +23,7 @@ export default class Address implements ValueObject {
     this._complement = props.complement;
     this._city = props.city;
     this._state = props.state;
-    this._zipCode = props.zipcode;
+    this._zipCode = props.zipCode;
   }
 
   get street(): string {

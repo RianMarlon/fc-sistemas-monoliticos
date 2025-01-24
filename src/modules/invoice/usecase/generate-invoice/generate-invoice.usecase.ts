@@ -23,7 +23,7 @@ export default class GenerateInvoiceUseCase implements UseCaseInterface {
         complement: input.complement,
         city: input.city,
         state: input.state,
-        zipcode: input.zipCode,
+        zipCode: input.zipCode,
       }),
       items: input.items.map(
         (item) =>
