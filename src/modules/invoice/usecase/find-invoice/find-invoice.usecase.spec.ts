@@ -48,7 +48,12 @@ describe("Find invoice usecase unit tests", () => {
     expect(result.id).toEqual(invoice.id.value);
     expect(result.name).toEqual(invoice.name);
     expect(result.document).toEqual(invoice.document);
-    expect(result.address).toEqual(invoice.address);
+    expect(result.address.number).toEqual(invoice.address.number);
+    expect(result.address.street).toEqual(invoice.address.street);
+    expect(result.address.complement).toEqual(invoice.address.complement);
+    expect(result.address.city).toEqual(invoice.address.city);
+    expect(result.address.state).toEqual(invoice.address.state);
+    expect(result.address.zipCode).toEqual(invoice.address.zipCode);
     expect(result.items[0].id).toEqual(invoice.items[0].id.value);
     expect(result.items[0].name).toEqual(invoice.items[0].name);
     expect(result.items[0].price).toEqual(invoice.items[0].price);
