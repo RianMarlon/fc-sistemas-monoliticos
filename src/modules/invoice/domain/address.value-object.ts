@@ -7,6 +7,7 @@ type AddressProps = {
   city: string;
   state: string;
   zipCode: string;
+  createdAt?: Date;
 };
 
 export default class Address implements ValueObject {
@@ -16,6 +17,7 @@ export default class Address implements ValueObject {
   private _city: string;
   private _state: string;
   private _zipCode: string;
+  private _createdAt: Date;
 
   constructor(props: AddressProps) {
     this._street = props.street;
@@ -24,6 +26,7 @@ export default class Address implements ValueObject {
     this._city = props.city;
     this._state = props.state;
     this._zipCode = props.zipCode;
+    this._createdAt = props.createdAt || new Date();
   }
 
   get street(): string {
@@ -48,5 +51,9 @@ export default class Address implements ValueObject {
 
   get zipCode(): string {
     return this._zipCode;
+  }
+
+  get createdAt(): Date {
+    return this._createdAt;
   }
 }
