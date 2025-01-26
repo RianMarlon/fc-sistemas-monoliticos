@@ -22,26 +22,28 @@ describe("TransactionRepository test", () => {
     await sequelize.close();
   });
 
-  it("should save a transaction", async () => {
-    const transaction = new Transaction({
-      id: "1",
-      amount: 100,
-      orderId: "1",
-    });
-    transaction.process();
-
-    const repository = new TransactionRepository();
-    await repository.save(transaction);
-
-    const transactionCreated = await TransactionModel.findOne({
-      where: {
+  describe("save", () => {
+    it("should save a transaction", async () => {
+      const transaction = new Transaction({
         id: "1",
-      },
-    });
+        amount: 100,
+        orderId: "1",
+      });
+      transaction.process();
 
-    expect(transactionCreated.id).toEqual(transaction.id.value);
-    expect(transactionCreated.status).toEqual(transaction.status);
-    expect(transactionCreated.amount).toEqual(transaction.amount);
-    expect(transactionCreated.orderId).toEqual(transaction.orderId);
+      const repository = new TransactionRepository();
+      await repository.save(transaction);
+
+      const transactionCreated = await TransactionModel.findOne({
+        where: {
+          id: "1",
+        },
+      });
+
+      expect(transactionCreated.id).toEqual(transaction.id.value);
+      expect(transactionCreated.status).toEqual(transaction.status);
+      expect(transactionCreated.amount).toEqual(transaction.amount);
+      expect(transactionCreated.orderId).toEqual(transaction.orderId);
+    });
   });
 });

@@ -1,8 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
 import TransactionModel from "../repository/transaction.model";
-import TransactionRepository from "../repository/transaction.repository";
-import ProcessPaymentUseCase from "../usecase/process-payment/process-payment.usecase";
-import PaymentFacade from "./payment.facade";
 import PaymentFacadeFactory from "../factory/payment.facade.factory";
 
 describe("Paymentacade test", () => {
@@ -24,19 +21,21 @@ describe("Paymentacade test", () => {
     await sequelize.close();
   });
 
-  it("should create a transaction", async () => {
-    const facade = PaymentFacadeFactory.create();
+  describe("create", () => {
+    it("should create a transaction", async () => {
+      const facade = PaymentFacadeFactory.create();
 
-    const input = {
-      orderId: "order-1",
-      amount: 100,
-    };
+      const input = {
+        orderId: "order-1",
+        amount: 100,
+      };
 
-    const output = await facade.process(input);
+      const output = await facade.process(input);
 
-    expect(output.transactionId).toBeDefined();
-    expect(output.orderId).toEqual(input.orderId);
-    expect(output.amount).toEqual(input.amount);
-    expect(output.status).toEqual("approved");
+      expect(output.transactionId).toBeDefined();
+      expect(output.orderId).toEqual(input.orderId);
+      expect(output.amount).toEqual(input.amount);
+      expect(output.status).toEqual("approved");
+    });
   });
 });

@@ -69,5 +69,10 @@ describe("ProductRepository test", () => {
       expect(product.description).toBe("Description 1");
       expect(product.salesPrice).toBe(100);
     });
+
+    it("should throw an error when the product not exists", async () => {
+      const productRepository = new ProductRepository();
+      await expect(productRepository.find("2")).rejects.toThrow();
+    });
   });
 });

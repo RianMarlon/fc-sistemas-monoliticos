@@ -71,7 +71,7 @@ describe("ProductRepository test", () => {
       expect(product.stock).toEqual(10);
     });
 
-    it("should throw an error when the product is not found", async () => {
+    it("should throw an error when the product not exists", async () => {
       const productRepository = new ProductRepository();
       await expect(productRepository.find("1")).rejects.toThrow();
     });
