@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
-import { ClientModel } from "./client.model";
+import { ClientModel } from "../repository/client.model";
 import ClientRepository from "./client.repository";
 import Client from "../domain/client.entity";
 
@@ -28,7 +28,15 @@ describe("ClientRepository test", () => {
         id: "1",
         name: "Client 1",
         email: "test@test.com",
-        address: "Address 1",
+        document: "12345678900",
+        street: "Street 1",
+        number: "123",
+        complement: "Apt 1",
+        city: "City 1",
+        state: "State 1",
+        zipCode: "12345-678",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
 
       const repository = new ClientRepository();
@@ -40,7 +48,13 @@ describe("ClientRepository test", () => {
       expect(clientDb.id).toEqual(client.id.value);
       expect(clientDb.name).toEqual(client.name);
       expect(clientDb.email).toEqual(client.email);
-      expect(clientDb.address).toEqual(client.address);
+      expect(clientDb.document).toEqual(client.document);
+      expect(clientDb.street).toEqual(client.street);
+      expect(clientDb.number).toEqual(client.number);
+      expect(clientDb.complement).toEqual(client.complement);
+      expect(clientDb.city).toEqual(client.city);
+      expect(clientDb.state).toEqual(client.state);
+      expect(clientDb.zipCode).toEqual(client.zipCode);
       expect(clientDb.createdAt).toEqual(client.createdAt);
       expect(clientDb.updatedAt).toEqual(client.updatedAt);
     });
@@ -52,7 +66,13 @@ describe("ClientRepository test", () => {
         id: "1",
         name: "Client 1",
         email: "test@test.com",
-        address: "Address 1",
+        document: "12345678900",
+        street: "Street 1",
+        number: "123",
+        complement: "Apt 1",
+        city: "City 1",
+        state: "State 1",
+        zipCode: "12345-678",
         createdAt: new Date(),
         updatedAt: new Date(),
       });
@@ -63,14 +83,20 @@ describe("ClientRepository test", () => {
       expect(result.id.value).toEqual(client.id);
       expect(result.name).toEqual(client.name);
       expect(result.email).toEqual(client.email);
-      expect(result.address).toEqual(client.address);
+      expect(result.document).toEqual(client.document);
+      expect(result.street).toEqual(client.street);
+      expect(result.number).toEqual(client.number);
+      expect(result.complement).toEqual(client.complement);
+      expect(result.city).toEqual(client.city);
+      expect(result.state).toEqual(client.state);
+      expect(result.zipCode).toEqual(client.zipCode);
       expect(result.createdAt).toEqual(client.createdAt);
       expect(result.updatedAt).toEqual(client.updatedAt);
     });
 
     it("should throw an error when the client not exists", async () => {
       const repository = new ClientRepository();
-      await expect(repository.find("2")).rejects.toThrow();
+      await expect(repository.find("2")).rejects.toThrow("Client not found");
     });
   });
 });
