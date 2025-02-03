@@ -1,4 +1,4 @@
-import Id from "../../../@shared/domain/value-object/id.value-object";
+import Id from "../../../../@shared/domain/value-object/id.value-object";
 import Product from "../../domain/product.entity";
 import { PlaceOrderInputDto } from "./place-order.dto";
 import PlaceOrderUseCase from "./place-order.usecase";

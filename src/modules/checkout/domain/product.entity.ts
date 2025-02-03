@@ -1,4 +1,4 @@
-import BaseEntity from "../../@shared/domain/entity/base.entity";
+import BaseEntity from "../../../@shared/domain/entity/base.entity";
 
 type ProductProps = {
   id?: string;

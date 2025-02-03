@@ -1,4 +1,4 @@
-import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
+import UseCaseInterface from "../../../../@shared/usecase/use-case.interface";
 import Address from "../../domain/address.value-object";
 import InvoiceItem from "../../domain/invoice-item.entity";
 import Invoice from "../../domain/invoice.entity";

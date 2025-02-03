@@ -1,4 +1,4 @@
-import UseCaseInterface from "../../../@shared/usecase/use-case.interface";
+import UseCaseInterface from "../../../../@shared/usecase/use-case.interface";
 import ProductGateway from "../../gateway/product.gateway";
 import { FindAllProductsOutputDto } from "./find-all-products.dto";
 
