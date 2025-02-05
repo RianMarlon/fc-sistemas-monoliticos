@@ -24,7 +24,7 @@ export class ClientModel extends Model {
   @Column({ allowNull: false })
   declare number: string;
 
-  @Column({ allowNull: false })
+  @Column({ allowNull: true })
   declare complement: string;
 
   @Column({ allowNull: false })
