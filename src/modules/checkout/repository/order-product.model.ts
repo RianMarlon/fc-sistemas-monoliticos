@@ -11,6 +11,7 @@ import ProductModel from "./product.model";
 import OrderModel from "./order.model";
 
 @Table({
+  modelName: "order-product-model-checkout",
   tableName: "orders_products",
 })
 export default class OrderProductModel extends Model {

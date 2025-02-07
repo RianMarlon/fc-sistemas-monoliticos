@@ -12,7 +12,9 @@ import OrderProductModel from "./order-product.model";
 import ProductModel from "./product.model";
 
 @Table({
+  modelName: "order-model-checkout",
   tableName: "orders",
+  timestamps: false,
 })
 export default class OrderModel extends Model {
   @PrimaryKey
