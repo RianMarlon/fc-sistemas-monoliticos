@@ -1,5 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
-import { ClientModel } from "./client.model";
+import { Umzug } from "umzug";
+
+import ClientModel from "./client.model";
 import OrderProductModel from "./order-product.model";
 import OrderModel from "./order.model";
 import ProductModel from "./product.model";
@@ -7,12 +9,13 @@ import Order from "../domain/order.entity";
 import OrderRepository from "./order.repository";
 import Client from "../domain/client.entity";
 import Product from "../domain/product.entity";
+import { migrator } from "../../../@shared/infra/database/sequelize/migrator";
 
 describe("OrderRepository test", () => {
   let sequelize: Sequelize;
+  let migration: Umzug<any>;
 
   beforeEach(async () => {
-    jest.useFakeTimers();
     sequelize = new Sequelize({
       dialect: "sqlite",
       storage: ":memory:",
@@ -21,15 +24,22 @@ describe("OrderRepository test", () => {
     });
 
     sequelize.addModels([
-      ClientModel,
       OrderModel,
-      ProductModel,
       OrderProductModel,
+      ClientModel,
+      ProductModel,
     ]);
-    await sequelize.sync();
+    migration = migrator(sequelize);
+    await migration.up();
   });
 
   afterEach(async () => {
+    jest.clearAllTimers();
+    if (!migration || !sequelize) {
+      return;
+    }
+    migration = migrator(sequelize);
+    await migration.down();
     await sequelize.close();
   });
 
@@ -123,6 +133,8 @@ describe("OrderRepository test", () => {
               name: orderCreated.products[0].name,
               description: orderCreated.products[0].description,
               salesPrice: orderCreated.products[0].salesPrice,
+              createdAt: orderCreated.products[0].createdAt,
+              updatedAt: orderCreated.products[0].updatedAt,
             })
           ),
         ])
@@ -135,6 +147,8 @@ describe("OrderRepository test", () => {
               name: orderCreated.products[1].name,
               description: orderCreated.products[1].description,
               salesPrice: orderCreated.products[1].salesPrice,
+              createdAt: orderCreated.products[1].createdAt,
+              updatedAt: orderCreated.products[1].updatedAt,
             })
           ),
         ])
@@ -224,6 +238,8 @@ describe("OrderRepository test", () => {
               name: productCreated1.name,
               description: productCreated1.description,
               salesPrice: productCreated1.salesPrice,
+              createdAt: productCreated1.createdAt,
+              updatedAt: productCreated1.updatedAt,
             })
           ),
         ])
@@ -236,6 +252,8 @@ describe("OrderRepository test", () => {
               name: productCreated2.name,
               description: productCreated2.description,
               salesPrice: productCreated2.salesPrice,
+              createdAt: productCreated2.createdAt,
+              updatedAt: productCreated2.updatedAt,
             })
           ),
         ])

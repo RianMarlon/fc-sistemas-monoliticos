@@ -3,7 +3,7 @@ import Client from "../domain/client.entity";
 import Order from "../domain/order.entity";
 import Product from "../domain/product.entity";
 import CheckoutGateway from "../gateway/checkout.gateway";
-import { ClientModel } from "./client.model";
+import ClientModel from "./client.model";
 import OrderProductModel from "./order-product.model";
 import OrderModel from "./order.model";
 import ProductModel from "./product.model";

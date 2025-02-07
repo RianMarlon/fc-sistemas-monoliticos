@@ -4,5 +4,6 @@ export interface FindAllProductsOutputDto {
     name: string;
     description: string;
     salesPrice: number;
+    stock: number;
   }[];
 }

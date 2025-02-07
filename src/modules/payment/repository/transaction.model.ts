@@ -1,4 +1,11 @@
-import { Column, Model, PrimaryKey, Table } from "sequelize-typescript";
+import {
+  BelongsTo,
+  Column,
+  Model,
+  PrimaryKey,
+  Table,
+} from "sequelize-typescript";
+import OrderModel from "./order.model";
 
 @Table({
   modelName: "transaction-model-payment",
@@ -12,6 +19,9 @@ export default class TransactionModel extends Model {
 
   @Column({ allowNull: false })
   declare orderId: string;
+
+  @BelongsTo(() => OrderModel, { foreignKey: "orderId" })
+  declare order: OrderModel;
 
   @Column({ allowNull: false })
   declare amount: number;

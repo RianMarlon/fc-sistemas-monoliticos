@@ -6,6 +6,7 @@ const product = new Product({
   name: "Product 1",
   description: "Description 1",
   salesPrice: 100,
+  stock: 70,
 });
 
 const product2 = new Product({
@@ -13,6 +14,7 @@ const product2 = new Product({
   name: "Product 2",
   description: "Description 2",
   salesPrice: 200,
+  stock: 5,
 });
 
 const MockRepository = () => {
@@ -22,7 +24,7 @@ const MockRepository = () => {
   };
 };
 
-describe("find all products secase unit test", () => {
+describe("find all products usecase unit test", () => {
   it("should find all products", async () => {
     const productRepository = MockRepository();
     const usecase = new FindAllProductsUseCase(productRepository);
@@ -35,9 +37,11 @@ describe("find all products secase unit test", () => {
     expect(result.products[0].name).toBe("Product 1");
     expect(result.products[0].description).toBe("Description 1");
     expect(result.products[0].salesPrice).toBe(100);
+    expect(result.products[0].stock).toBe(70);
     expect(result.products[1].id).toBe("2");
     expect(result.products[1].name).toBe("Product 2");
     expect(result.products[1].description).toBe("Description 2");
     expect(result.products[1].salesPrice).toBe(200);
+    expect(result.products[1].stock).toBe(5);
   });
 });

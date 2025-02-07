@@ -18,4 +18,13 @@ export default class ProductModel extends Model {
 
   @Column({ allowNull: false })
   declare salesPrice: number;
+
+  @Column({ allowNull: false })
+  declare stock: number;
+
+  @Column({ allowNull: false })
+  declare createdAt: Date;
+
+  @Column({ allowNull: false })
+  declare updatedAt: Date;
 }

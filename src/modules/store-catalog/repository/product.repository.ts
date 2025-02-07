@@ -12,6 +12,7 @@ export default class ProductRepository implements ProductGateway {
           name: product.name,
           description: product.description,
           salesPrice: product.salesPrice,
+          stock: product.stock,
         })
     );
   }
@@ -31,6 +32,7 @@ export default class ProductRepository implements ProductGateway {
       name: product.name,
       description: product.description,
       salesPrice: product.salesPrice,
+      stock: product.stock,
     });
   }
 }

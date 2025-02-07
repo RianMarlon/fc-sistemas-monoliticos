@@ -12,6 +12,7 @@ export default class FindProductUseCase {
       name: product.name,
       description: product.description,
       salesPrice: product.salesPrice,
+      stock: product.stock,
     };
   }
 }

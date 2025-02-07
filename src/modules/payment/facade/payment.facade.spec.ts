@@ -1,6 +1,9 @@
 import { Sequelize } from "sequelize-typescript";
+
 import TransactionModel from "../repository/transaction.model";
 import PaymentFacadeFactory from "../factory/payment.facade.factory";
+import { ClientModel } from "../repository/client.model";
+import OrderModel from "../repository/order.model";
 
 describe("Paymentacade test", () => {
   let sequelize: Sequelize;
@@ -13,7 +16,7 @@ describe("Paymentacade test", () => {
       sync: { force: true },
     });
 
-    sequelize.addModels([TransactionModel]);
+    sequelize.addModels([TransactionModel, ClientModel, OrderModel]);
     await sequelize.sync();
   });
 
@@ -23,10 +26,32 @@ describe("Paymentacade test", () => {
 
   describe("create", () => {
     it("should create a transaction", async () => {
+      await ClientModel.create({
+        id: "1",
+        name: "Client 1",
+        email: "test@test.com",
+        document: "12345678900",
+        street: "Street 1",
+        number: "123",
+        complement: "Apt 1",
+        city: "City 1",
+        state: "State 1",
+        zipCode: "12345-678",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      await OrderModel.create({
+        id: "1",
+        status: "pending",
+        clientId: "1",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+
       const facade = PaymentFacadeFactory.create();
 
       const input = {
-        orderId: "order-1",
+        orderId: "1",
         amount: 100,
       };
 

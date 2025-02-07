@@ -1,4 +1,6 @@
 import { Sequelize } from "sequelize-typescript";
+import { Umzug } from "umzug";
+
 import InvoiceAddressModel from "./invoice-address.model";
 import InvoiceItemModel from "./invoice-item.model";
 import InvoiceModel from "./invoice.model";
@@ -6,9 +8,11 @@ import { InvoiceRepository } from "./invoice.repository";
 import Invoice from "../domain/invoice.entity";
 import Address from "../domain/address.value-object";
 import InvoiceItem from "../domain/invoice-item.entity";
+import { migrator } from "../../../@shared/infra/database/sequelize/migrator";
 
 describe("InvoiceRepository test", () => {
   let sequelize: Sequelize;
+  let migration: Umzug<any>;
 
   beforeEach(async () => {
     sequelize = new Sequelize({
@@ -19,10 +23,16 @@ describe("InvoiceRepository test", () => {
     });
 
     sequelize.addModels([InvoiceModel, InvoiceItemModel, InvoiceAddressModel]);
-    await sequelize.sync();
+    migration = migrator(sequelize);
+    await migration.up();
   });
 
   afterEach(async () => {
+    if (!migration || !sequelize) {
+      return;
+    }
+    migration = migrator(sequelize);
+    await migration.down();
     await sequelize.close();
   });
 
@@ -66,7 +76,6 @@ describe("InvoiceRepository test", () => {
       await InvoiceModel.create(invoiceProps, {
         include: [InvoiceItemModel, InvoiceAddressModel],
       });
-
       const invoice = await invoiceRepository.find("1");
 
       expect(invoice.id.value).toEqual(invoiceProps.id);

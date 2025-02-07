@@ -1,10 +1,14 @@
 import { Sequelize } from "sequelize-typescript";
+import { Umzug } from "umzug";
+
 import { ProductModel } from "./product.model";
 import Product from "../domain/product.entity";
 import ProductRepository from "./product.repository";
+import { migrator } from "../../../@shared/infra/database/sequelize/migrator";
 
 describe("ProductRepository test", () => {
   let sequelize: Sequelize;
+  let migration: Umzug<any>;
 
   beforeEach(async () => {
     sequelize = new Sequelize({
@@ -15,10 +19,16 @@ describe("ProductRepository test", () => {
     });
 
     sequelize.addModels([ProductModel]);
-    await sequelize.sync();
+    migration = migrator(sequelize);
+    await migration.up();
   });
 
   afterEach(async () => {
+    if (!migration || !sequelize) {
+      return;
+    }
+    migration = migrator(sequelize);
+    await migration.down();
     await sequelize.close();
   });
 
@@ -30,6 +40,8 @@ describe("ProductRepository test", () => {
         description: "Product 1 description",
         purchasePrice: 100,
         stock: 10,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       };
       const product = new Product(productProps);
       const productRepository = new ProductRepository();
@@ -52,8 +64,7 @@ describe("ProductRepository test", () => {
   describe("find", () => {
     it("should find a product", async () => {
       const productRepository = new ProductRepository();
-
-      ProductModel.create({
+      await ProductModel.create({
         id: "1",
         name: "Product 1",
         description: "Product 1 description",

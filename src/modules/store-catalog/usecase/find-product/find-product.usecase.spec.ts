@@ -6,6 +6,7 @@ const product = new Product({
   name: "Product 1",
   description: "Description 1",
   salesPrice: 100,
+  stock: 30,
 });
 
 const MockRepository = () => {
@@ -30,5 +31,6 @@ describe("find a product usecase unit test", () => {
     expect(result.name).toBe("Product 1");
     expect(result.description).toBe("Description 1");
     expect(result.salesPrice).toBe(100);
+    expect(result.stock).toBe(30);
   });
 });

@@ -2,9 +2,12 @@ import { Sequelize } from "sequelize-typescript";
 import { ClientModel } from "../repository/client.model";
 import ClientRepository from "./client.repository";
 import Client from "../domain/client.entity";
+import { Umzug } from "umzug";
+import { migrator } from "../../../@shared/infra/database/sequelize/migrator";
 
 describe("ClientRepository test", () => {
   let sequelize: Sequelize;
+  let migration: Umzug<any>;
 
   beforeEach(async () => {
     sequelize = new Sequelize({
@@ -15,10 +18,16 @@ describe("ClientRepository test", () => {
     });
 
     sequelize.addModels([ClientModel]);
-    await sequelize.sync();
+    migration = migrator(sequelize);
+    await migration.up();
   });
 
   afterEach(async () => {
+    if (!migration || !sequelize) {
+      return;
+    }
+    migration = migrator(sequelize);
+    await migration.down();
     await sequelize.close();
   });
 

@@ -13,6 +13,7 @@ export default class FindAllProductsUseCase implements UseCaseInterface {
         name: product.name,
         description: product.description,
         salesPrice: product.salesPrice,
+        stock: product.stock,
       })),
     };
   }
