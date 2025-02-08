@@ -4,7 +4,7 @@ import { Umzug } from "umzug";
 import { ProductModel } from "./product.model";
 import Product from "../domain/product.entity";
 import ProductRepository from "./product.repository";
-import { migrator } from "../../../@shared/infra/database/sequelize/migrator";
+import { migrator } from "../../../@shared/infrastructure/database/sequelize/migrator";
 
 describe("ProductRepository test", () => {
   let sequelize: Sequelize;

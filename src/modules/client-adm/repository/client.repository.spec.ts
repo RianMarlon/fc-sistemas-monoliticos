@@ -3,7 +3,7 @@ import { ClientModel } from "../repository/client.model";
 import ClientRepository from "./client.repository";
 import Client from "../domain/client.entity";
 import { Umzug } from "umzug";
-import { migrator } from "../../../@shared/infra/database/sequelize/migrator";
+import { migrator } from "../../../@shared/infrastructure/database/sequelize/migrator";
 
 describe("ClientRepository test", () => {
   let sequelize: Sequelize;

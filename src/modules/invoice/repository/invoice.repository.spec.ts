@@ -8,7 +8,7 @@ import { InvoiceRepository } from "./invoice.repository";
 import Invoice from "../domain/invoice.entity";
 import Address from "../domain/address.value-object";
 import InvoiceItem from "../domain/invoice-item.entity";
-import { migrator } from "../../../@shared/infra/database/sequelize/migrator";
+import { migrator } from "../../../@shared/infrastructure/database/sequelize/migrator";
 
 describe("InvoiceRepository test", () => {
   let sequelize: Sequelize;

@@ -9,7 +9,7 @@ import Order from "../domain/order.entity";
 import OrderRepository from "./order.repository";
 import Client from "../domain/client.entity";
 import Product from "../domain/product.entity";
-import { migrator } from "../../../@shared/infra/database/sequelize/migrator";
+import { migrator } from "../../../@shared/infrastructure/database/sequelize/migrator";
 
 describe("OrderRepository test", () => {
   let sequelize: Sequelize;
