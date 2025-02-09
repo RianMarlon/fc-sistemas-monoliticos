@@ -126,13 +126,13 @@ describe("Invoice e2e tests", () => {
       );
     });
 
-    it("should return an erro when the invoice not found", async () => {
+    it("should return an error message when the invoice not found", async () => {
       const response = await request(fastifyServer.server).get(
         "/invoices/ce8320ca-809f-44c3-97b7-a2c9668d4839"
       );
 
-      console.log(response);
       expect(response.status).toEqual(500);
+      expect(response.body.message).toEqual("Invoice not found");
     });
   });
 });
