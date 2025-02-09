@@ -18,8 +18,8 @@
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
-    "dev": "nodemon ./dist/@shared/infrastructure/http/fastify/server.js",
-    "start": "node ./dist/@shared/infrastructure/http/fastify/server.js",
+    "dev": "nodemon --watch src --ext ts --exec ts-node ./src/@shared/infrastructure/http/server.ts",
+    "start": "node ./dist/@shared/infrastructure/http/server.js",
     "test": "jest",
     "migration:up": "node -r ts-node/register/transpile-only ./src/@shared/infra/database/sequelize/sequelize-cli.ts up",
     "migration:down": "node -r ts-node/register/transpile-only ./src/@shared/infra/database/sequelize/sequelize-cli.ts down"
