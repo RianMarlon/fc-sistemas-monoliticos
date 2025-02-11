@@ -5,8 +5,7 @@ import {
   PrimaryKey,
   Table,
 } from "sequelize-typescript";
-
-import ClientModel from "../../checkout/repository/client.model";
+import ClientModel from "./client.model";
 
 @Table({
   modelName: "order-model-payement",

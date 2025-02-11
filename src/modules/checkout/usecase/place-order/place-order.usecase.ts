@@ -28,11 +28,11 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
       throw new Error("Client not found");
     }
 
-    await this.validateProducts(input);
-
     const products = await Promise.all(
       input.products.map((product) => this.getProduct(product.productId))
     );
+
+    await this.validateProducts(products);
 
     const myClient = new Client({
       id: client.id,
@@ -45,6 +45,8 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
       client: myClient,
       products,
     });
+
+    await this._repository.addOrder(order);
 
     const payment = await this._paymentFacade.process({
       orderId: order.id.value,
@@ -73,7 +75,8 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
         : null;
 
     payment.status === "approved" && order.approved();
-    this._repository.addOrder(order);
+
+    await this._repository.updateOrder(order);
 
     return {
       id: order.id.value,
@@ -88,18 +91,18 @@ export default class PlaceOrderUseCase implements UseCaseInterface {
     };
   }
 
-  private async validateProducts(input: PlaceOrderInputDto): Promise<void> {
-    if (!input.products.length) {
+  private async validateProducts(products: Product[]): Promise<void> {
+    if (!products.length) {
       throw new Error("No products selected");
     }
 
-    for (const product of input.products) {
+    for (const product of products) {
       const productExists = await this._productFacade.checkStock({
-        productId: product.productId,
+        productId: product.id.value,
       });
       if (productExists.stock <= 0) {
         throw new Error(
-          `Product ${product.productId} is not available in stock`
+          `Product ${productExists.productId} is not available in stock`
         );
       }
     }

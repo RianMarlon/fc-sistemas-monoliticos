@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
-import { ClientModel } from "../repository/client.model";
+import ClientModel from "../repository/client.model";
 import ClientAdmFacadeFactory from "../factory/client-adm.facade.factory";
 
 describe("ClientAdmFacadeSpec test", () => {

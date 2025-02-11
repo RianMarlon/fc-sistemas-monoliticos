@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize-typescript";
 
 import TransactionModel from "../repository/transaction.model";
 import PaymentFacadeFactory from "../factory/payment.facade.factory";
-import { ClientModel } from "../repository/client.model";
+import ClientModel from "../repository/client.model";
 import OrderModel from "../repository/order.model";
 
 describe("Paymentacade test", () => {

@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import { Umzug } from "umzug";
 
-import { ProductModel } from "./product.model";
+import ProductModel from "./product.model";
 import Product from "../domain/product.entity";
 import ProductRepository from "./product.repository";
 import { migrator } from "../../../@shared/infrastructure/database/sequelize/migrator";

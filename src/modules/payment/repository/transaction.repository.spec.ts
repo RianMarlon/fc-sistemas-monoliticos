@@ -5,7 +5,7 @@ import TransactionModel from "./transaction.model";
 import Transaction from "../domain/transaction";
 import TransactionRepository from "./transaction.repository";
 import { migrator } from "../../../@shared/infrastructure/database/sequelize/migrator";
-import { ClientModel } from "./client.model";
+import ClientModel from "./client.model";
 import OrderModel from "./order.model";
 
 describe("TransactionRepository test", () => {

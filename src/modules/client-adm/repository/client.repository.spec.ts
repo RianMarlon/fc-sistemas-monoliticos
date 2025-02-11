@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
-import { ClientModel } from "../repository/client.model";
+import ClientModel from "../repository/client.model";
 import ClientRepository from "./client.repository";
 import Client from "../domain/client.entity";
 import { Umzug } from "umzug";

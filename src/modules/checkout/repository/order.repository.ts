@@ -31,6 +31,19 @@ export default class OrderRepository implements CheckoutGateway {
     );
   }
 
+  async updateOrder(order: Order): Promise<void> {
+    await OrderModel.update(
+      {
+        status: order.status,
+      },
+      {
+        where: {
+          id: order.id.value,
+        },
+      }
+    );
+  }
+
   async findOrder(id: string): Promise<Order> {
     const order = await OrderModel.findOne({
       where: {

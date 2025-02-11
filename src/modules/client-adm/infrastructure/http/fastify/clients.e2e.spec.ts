@@ -4,7 +4,7 @@ import request from "supertest";
 
 import { migrator } from "../../../../../@shared/infrastructure/database/sequelize/migrator";
 import fastifyServer from "../../../../../@shared/infrastructure/http/fastify";
-import { ClientModel } from "../../../repository/client.model";
+import ClientModel from "../../../repository/client.model";
 
 describe("Clients e2e tests", () => {
   let sequelize: Sequelize;

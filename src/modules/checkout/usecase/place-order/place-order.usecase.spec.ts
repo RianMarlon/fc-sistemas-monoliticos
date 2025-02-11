@@ -1,4 +1,3 @@
-import Id from "../../../../@shared/domain/value-object/id.value-object";
 import Product from "../../domain/product.entity";
 import { PlaceOrderInputDto } from "./place-order.dto";
 import PlaceOrderUseCase from "./place-order.usecase";
@@ -10,12 +9,8 @@ describe("PlaceOrderUseCase unit test", () => {
     const placeOrderUseCase = new PlaceOrderUseCase();
 
     it("should throw an error if no products are selected", async () => {
-      const input: PlaceOrderInputDto = {
-        clientId: "1",
-        products: [],
-      };
       await expect(
-        placeOrderUseCase["validateProducts"](input)
+        placeOrderUseCase["validateProducts"]([] as Product[])
       ).rejects.toThrow(new Error("No products selected"));
     });
 
@@ -32,51 +27,61 @@ describe("PlaceOrderUseCase unit test", () => {
       // @ts-expect-error - force set productFacade
       placeOrderUseCase["_productFacade"] = mockProductFacade;
 
-      let input: PlaceOrderInputDto = {
-        clientId: "0",
-        products: [
-          {
-            productId: "1",
-          },
-        ],
-      };
+      let products = [
+        new Product({
+          id: "1",
+          name: "Product 1",
+          description: "some description",
+          salesPrice: 20,
+        }),
+      ];
 
       await expect(
-        placeOrderUseCase["validateProducts"](input)
+        placeOrderUseCase["validateProducts"](products)
       ).rejects.toThrow(new Error("Product 1 is not available in stock"));
 
-      input = {
-        clientId: "0",
-        products: [
-          {
-            productId: "0",
-          },
-          {
-            productId: "1",
-          },
-        ],
-      };
+      products = [
+        new Product({
+          id: "0",
+          name: "Product 0",
+          description: "Product 0 description",
+          salesPrice: 20,
+        }),
+        new Product({
+          id: "1",
+          name: "Product 1",
+          description: "some description",
+          salesPrice: 40,
+        }),
+      ];
+
       await expect(
-        placeOrderUseCase["validateProducts"](input)
+        placeOrderUseCase["validateProducts"](products)
       ).rejects.toThrow(new Error("Product 1 is not available in stock"));
       expect(mockProductFacade.checkStock).toHaveBeenCalledTimes(3);
 
-      input = {
-        clientId: "0",
-        products: [
-          {
-            productId: "0",
-          },
-          {
-            productId: "1",
-          },
-          {
-            productId: "2",
-          },
-        ],
-      };
+      products = [
+        new Product({
+          id: "0",
+          name: "Product 0",
+          description: "Product 0 description",
+          salesPrice: 20,
+        }),
+        new Product({
+          id: "1",
+          name: "Product 1",
+          description: "some description",
+          salesPrice: 40,
+        }),
+        new Product({
+          id: "2",
+          name: "Product 2",
+          description: "some description",
+          salesPrice: 60,
+        }),
+      ];
       await expect(
-        placeOrderUseCase["validateProducts"](input)
+        placeOrderUseCase["validateProducts"](products)
       ).rejects.toThrow(new Error("Product 1 is not available in stock"));
       expect(mockProductFacade.checkStock).toHaveBeenCalledTimes(5);
     });
@@ -214,6 +219,7 @@ describe("PlaceOrderUseCase unit test", () => {
 
       const mockCheckoutRepo = {
         addOrder: jest.fn(),
+        updateOrder: jest.fn(),
       };
 
       const mockInvoiceFacade = {
@@ -286,7 +292,10 @@ describe("PlaceOrderUseCase unit test", () => {
         expect(mockClientFacade.find).toHaveBeenCalledTimes(1);
         expect(mockClientFacade.find).toHaveBeenCalledWith({ id: "1c" });
         expect(mockValidateProducts).toHaveBeenCalledTimes(1);
-        expect(mockValidateProducts).toHaveBeenCalledWith(input);
+        expect(mockValidateProducts).toHaveBeenCalledWith([
+          products["1"],
+          products["2"],
+        ]);
         expect(mockGetProduct).toHaveBeenCalledTimes(2);
         expect(mockCheckoutRepo.addOrder).toHaveBeenCalledTimes(1);
         expect(mockPaymentFacade.process).toHaveBeenCalledTimes(1);
@@ -345,7 +354,10 @@ describe("PlaceOrderUseCase unit test", () => {
         expect(mockClientFacade.find).toHaveBeenCalledTimes(1);
         expect(mockClientFacade.find).toHaveBeenCalledWith({ id: "1c" });
         expect(mockValidateProducts).toHaveBeenCalledTimes(1);
-        expect(mockValidateProducts).toHaveBeenCalledWith(input);
+        expect(mockValidateProducts).toHaveBeenCalledWith([
+          products["1"],
+          products["2"],
+        ]);
         expect(mockGetProduct).toHaveBeenCalledTimes(2);
         expect(mockCheckoutRepo.addOrder).toHaveBeenCalledTimes(1);
         expect(mockPaymentFacade.process).toHaveBeenCalledTimes(1);
