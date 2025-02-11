@@ -110,7 +110,6 @@ describe("Checkout e2e tests", () => {
         .send(requestBody);
       const checkoutCreated = response.body;
 
-      console.log(response.body);
       expect(response.status).toEqual(201);
 
       expect(checkoutCreated.id).toBeDefined();
