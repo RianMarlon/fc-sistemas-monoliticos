@@ -1,10 +1,10 @@
 import { Sequelize } from "sequelize-typescript";
 import { Umzug } from "umzug";
 import request from "supertest";
+import { join } from "path";
 
 import { migrator } from "../../../../../@shared/infrastructure/database/sequelize/migrator";
 import fastifyServer from "../../../../../@shared/infrastructure/http/fastify";
-import ProductModel from "../../../repository/product.model";
 
 describe("Products e2e tests", () => {
   let sequelize: Sequelize;
@@ -19,9 +19,9 @@ describe("Products e2e tests", () => {
       dialect: "sqlite",
       storage: ":memory:",
       logging: false,
+      models: [join(__dirname, "../../../../**/*.model.ts")],
     });
 
-    sequelize.addModels([ProductModel]);
     migration = migrator(sequelize);
     await migration.up();
   });

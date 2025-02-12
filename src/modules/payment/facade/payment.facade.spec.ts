@@ -13,7 +13,6 @@ describe("Paymentacade test", () => {
       dialect: "sqlite",
       storage: ":memory:",
       logging: false,
-      sync: { force: true },
     });
 
     sequelize.addModels([TransactionModel, ClientModel, OrderModel]);

@@ -1,4 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
+
 import ClientModel from "../repository/client.model";
 import ClientAdmFacadeFactory from "../factory/client-adm.facade.factory";
 
@@ -10,7 +11,6 @@ describe("ClientAdmFacadeSpec test", () => {
       dialect: "sqlite",
       storage: ":memory:",
       logging: false,
-      sync: { force: true },
     });
 
     sequelize.addModels([ClientModel]);

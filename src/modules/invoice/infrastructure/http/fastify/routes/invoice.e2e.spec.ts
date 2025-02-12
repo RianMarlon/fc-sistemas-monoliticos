@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize-typescript";
 import request from "supertest";
 import { Umzug } from "umzug";
+import { join } from "path";
 
 import { migrator } from "../../../../../../@shared/infrastructure/database/sequelize/migrator";
 import InvoiceModel from "../../../../repository/invoice.model";
@@ -21,9 +22,9 @@ describe("Invoice e2e tests", () => {
       dialect: "sqlite",
       storage: ":memory:",
       logging: false,
+      models: [join(__dirname, "../../../../**/*.model.ts")],
     });
 
-    sequelize.addModels([InvoiceModel, InvoiceItemModel, InvoiceAddressModel]);
     migration = migrator(sequelize);
     await migration.up();
   });

@@ -1,8 +1,9 @@
 import { Sequelize } from "sequelize-typescript";
+import { Umzug } from "umzug";
+
 import ClientModel from "../repository/client.model";
 import ClientRepository from "./client.repository";
 import Client from "../domain/client.entity";
-import { Umzug } from "umzug";
 import { migrator } from "../../../@shared/infrastructure/database/sequelize/migrator";
 
 describe("ClientRepository test", () => {
@@ -14,7 +15,6 @@ describe("ClientRepository test", () => {
       dialect: "sqlite",
       storage: ":memory:",
       logging: false,
-      sync: { force: true },
     });
 
     sequelize.addModels([ClientModel]);

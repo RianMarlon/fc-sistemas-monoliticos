@@ -1,22 +1,13 @@
 import { Sequelize } from "sequelize-typescript";
 import { Umzug } from "umzug";
 import request from "supertest";
+import { join } from "path";
 
 import { migrator } from "../../../../../@shared/infrastructure/database/sequelize/migrator";
 import fastifyServer from "../../../../../@shared/infrastructure/http/fastify";
-import OrderProductModel from "../../../repository/order-product.model";
-import OrderModel from "../../../repository/order.model";
 
-import OrderModel2 from "../../../../payment/repository/order.model";
-import ProductModel3 from "../../../../store-catalog/repository/product.model";
-import ProductModel2 from "../../../../product-adm/repository/product.model";
 import ClientModel from "../../../repository/client.model";
-import ClientModel2 from "../.../../../../../client-adm/repository/client.model";
 import ProductModel from "../../../repository/product.model";
-import TransactionModel from "../../../../payment/repository/transaction.model";
-import InvoiceModel from "../../../../invoice/repository/invoice.model";
-import InvoiceItemModel from "../../../../invoice/repository/invoice-item.model";
-import InvoiceAddressModel from "../../../../invoice/repository/invoice-address.model";
 
 describe("Checkout e2e tests", () => {
   let sequelize: Sequelize;
@@ -31,22 +22,9 @@ describe("Checkout e2e tests", () => {
       dialect: "sqlite",
       storage: ":memory:",
       logging: false,
+      models: [join(__dirname, "../../../../**/*.model.ts")],
     });
 
-    sequelize.addModels([
-      ClientModel,
-      ClientModel2,
-      OrderProductModel,
-      ProductModel,
-      ProductModel2,
-      ProductModel3,
-      OrderModel,
-      OrderModel2,
-      TransactionModel,
-      InvoiceModel,
-      InvoiceItemModel,
-      InvoiceAddressModel,
-    ]);
     migration = migrator(sequelize);
     await migration.up();
   });
