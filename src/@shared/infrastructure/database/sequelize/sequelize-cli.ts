@@ -1,5 +1,5 @@
 import { join } from "path";
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 import { migrator } from "./migrator";
 
 const sequelize = new Sequelize({

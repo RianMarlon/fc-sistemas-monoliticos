@@ -1,6 +1,6 @@
 import { SequelizeStorage, Umzug } from "umzug";
 import { join } from "path";
-import { Sequelize } from "sequelize";
+import { Sequelize } from "sequelize-typescript";
 
 export const migrator = (sequelize: Sequelize) => {
   return new Umzug({
