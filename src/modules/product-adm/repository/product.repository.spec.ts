@@ -52,11 +52,11 @@ describe("ProductRepository test", () => {
         },
       });
 
-      expect(productDb.id).toEqual(productProps.id);
-      expect(productDb.name).toEqual(productProps.name);
-      expect(productDb.description).toEqual(productProps.description);
-      expect(productDb.purchasePrice).toEqual(productProps.purchasePrice);
-      expect(productDb.stock).toEqual(productProps.stock);
+      expect(productDb?.id).toEqual(productProps.id);
+      expect(productDb?.name).toEqual(productProps.name);
+      expect(productDb?.description).toEqual(productProps.description);
+      expect(productDb?.purchasePrice).toEqual(productProps.purchasePrice);
+      expect(productDb?.stock).toEqual(productProps.stock);
     });
   });
 

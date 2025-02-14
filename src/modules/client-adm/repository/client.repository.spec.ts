@@ -54,18 +54,18 @@ describe("ClientRepository test", () => {
       const clientDb = await ClientModel.findOne({ where: { id: "1" } });
 
       expect(clientDb).toBeDefined();
-      expect(clientDb.id).toEqual(client.id.value);
-      expect(clientDb.name).toEqual(client.name);
-      expect(clientDb.email).toEqual(client.email);
-      expect(clientDb.document).toEqual(client.document);
-      expect(clientDb.street).toEqual(client.street);
-      expect(clientDb.number).toEqual(client.number);
-      expect(clientDb.complement).toEqual(client.complement);
-      expect(clientDb.city).toEqual(client.city);
-      expect(clientDb.state).toEqual(client.state);
-      expect(clientDb.zipCode).toEqual(client.zipCode);
-      expect(clientDb.createdAt).toEqual(client.createdAt);
-      expect(clientDb.updatedAt).toEqual(client.updatedAt);
+      expect(clientDb?.id).toEqual(client.id.value);
+      expect(clientDb?.name).toEqual(client.name);
+      expect(clientDb?.email).toEqual(client.email);
+      expect(clientDb?.document).toEqual(client.document);
+      expect(clientDb?.street).toEqual(client.street);
+      expect(clientDb?.number).toEqual(client.number);
+      expect(clientDb?.complement).toEqual(client.complement);
+      expect(clientDb?.city).toEqual(client.city);
+      expect(clientDb?.state).toEqual(client.state);
+      expect(clientDb?.zipCode).toEqual(client.zipCode);
+      expect(clientDb?.createdAt).toEqual(client.createdAt);
+      expect(clientDb?.updatedAt).toEqual(client.updatedAt);
     });
   });
 

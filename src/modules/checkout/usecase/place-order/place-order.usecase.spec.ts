@@ -228,8 +228,8 @@ describe("PlaceOrderUseCase unit test", () => {
 
       const placeOrderUseCase = new PlaceOrderUseCase(
         mockClientFacade as any,
-        null,
-        null,
+        null as any,
+        null as any,
         mockCheckoutRepo as any,
         mockInvoiceFacade as any,
         mockPaymentFacade as any

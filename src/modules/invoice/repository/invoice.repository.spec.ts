@@ -135,23 +135,23 @@ describe("InvoiceRepository test", () => {
         include: [InvoiceItemModel, InvoiceAddressModel],
       });
 
-      expect(invoice.id.value).toEqual(invoiceCreated.id);
-      expect(invoice.name).toEqual(invoiceCreated.name);
-      expect(invoice.document).toEqual(invoiceCreated.document);
-      expect(invoice.address.number).toEqual(invoiceCreated.address.number);
-      expect(invoice.address.street).toEqual(invoiceCreated.address.street);
+      expect(invoice.id.value).toEqual(invoiceCreated?.id);
+      expect(invoice.name).toEqual(invoiceCreated?.name);
+      expect(invoice.document).toEqual(invoiceCreated?.document);
+      expect(invoice.address.number).toEqual(invoiceCreated?.address.number);
+      expect(invoice.address.street).toEqual(invoiceCreated?.address.street);
       expect(invoice.address.complement).toEqual(
-        invoiceCreated.address.complement
+        invoiceCreated?.address.complement
       );
-      expect(invoice.address.city).toEqual(invoiceCreated.address.city);
-      expect(invoice.address.state).toEqual(invoiceCreated.address.state);
-      expect(invoice.address.zipCode).toEqual(invoiceCreated.address.zipCode);
-      expect(invoice.items[0].id.value).toEqual(invoiceCreated.items[0].id);
-      expect(invoice.items[0].name).toEqual(invoiceCreated.items[0].name);
-      expect(invoice.items[0].price).toEqual(invoiceCreated.items[0].price);
-      expect(invoice.items[1].id.value).toEqual(invoiceCreated.items[1].id);
-      expect(invoice.items[1].name).toEqual(invoiceCreated.items[1].name);
-      expect(invoice.items[1].price).toEqual(invoiceCreated.items[1].price);
+      expect(invoice.address.city).toEqual(invoiceCreated?.address.city);
+      expect(invoice.address.state).toEqual(invoiceCreated?.address.state);
+      expect(invoice.address.zipCode).toEqual(invoiceCreated?.address.zipCode);
+      expect(invoice.items[0].id.value).toEqual(invoiceCreated?.items[0].id);
+      expect(invoice.items[0].name).toEqual(invoiceCreated?.items[0].name);
+      expect(invoice.items[0].price).toEqual(invoiceCreated?.items[0].price);
+      expect(invoice.items[1].id.value).toEqual(invoiceCreated?.items[1].id);
+      expect(invoice.items[1].name).toEqual(invoiceCreated?.items[1].name);
+      expect(invoice.items[1].price).toEqual(invoiceCreated?.items[1].price);
     });
   });
 });

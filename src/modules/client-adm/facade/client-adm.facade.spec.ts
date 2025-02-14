@@ -45,16 +45,15 @@ describe("ClientAdmFacadeSpec test", () => {
         },
       });
 
-      expect(client).toBeDefined();
-      expect(client.name).toEqual(input.name);
-      expect(client.email).toEqual(input.email);
-      expect(client.document).toEqual(input.document);
-      expect(client.street).toEqual(input.street);
-      expect(client.number).toEqual(input.number);
-      expect(client.complement).toEqual(input.complement);
-      expect(client.city).toEqual(input.city);
-      expect(client.state).toEqual(input.state);
-      expect(client.zipCode).toEqual(input.zipCode);
+      expect(client?.name).toEqual(input.name);
+      expect(client?.email).toEqual(input.email);
+      expect(client?.document).toEqual(input.document);
+      expect(client?.street).toEqual(input.street);
+      expect(client?.number).toEqual(input.number);
+      expect(client?.complement).toEqual(input.complement);
+      expect(client?.city).toEqual(input.city);
+      expect(client?.state).toEqual(input.state);
+      expect(client?.zipCode).toEqual(input.zipCode);
     });
   });
 

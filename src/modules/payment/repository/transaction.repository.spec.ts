@@ -73,10 +73,10 @@ describe("TransactionRepository test", () => {
         },
       });
 
-      expect(transactionCreated.id).toEqual(transaction.id.value);
-      expect(transactionCreated.status).toEqual(transaction.status);
-      expect(transactionCreated.amount).toEqual(transaction.amount);
-      expect(transactionCreated.orderId).toEqual(transaction.orderId);
+      expect(transactionCreated?.id).toEqual(transaction.id.value);
+      expect(transactionCreated?.status).toEqual(transaction.status);
+      expect(transactionCreated?.amount).toEqual(transaction.amount);
+      expect(transactionCreated?.orderId).toEqual(transaction.orderId);
     });
   });
 });

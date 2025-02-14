@@ -116,24 +116,24 @@ describe("OrderRepository test", () => {
         include: [OrderProductModel, ProductModel, ClientModel],
       });
 
-      expect(order.id.value).toEqual(orderCreated.id);
-      expect(order.status).toEqual(orderCreated.status);
+      expect(order.id.value).toEqual(orderCreated?.id);
+      expect(order.status).toEqual(orderCreated?.status);
       expect(order.total).toEqual(300);
 
-      expect(order.client.id.value).toEqual(orderCreated.client.id);
-      expect(order.client.name).toEqual(orderCreated.client.name);
-      expect(order.client.address).toEqual(orderCreated.client.street);
+      expect(order.client.id.value).toEqual(orderCreated?.client.id);
+      expect(order.client.name).toEqual(orderCreated?.client.name);
+      expect(order.client.address).toEqual(orderCreated?.client.street);
 
       expect(order.products).toEqual(
         expect.arrayContaining([
           expect.objectContaining(
             new Product({
-              id: orderCreated.products[0].id,
-              name: orderCreated.products[0].name,
-              description: orderCreated.products[0].description,
-              salesPrice: orderCreated.products[0].salesPrice,
-              createdAt: orderCreated.products[0].createdAt,
-              updatedAt: orderCreated.products[0].updatedAt,
+              id: orderCreated?.products[0].id,
+              name: orderCreated?.products[0].name as string,
+              description: orderCreated?.products[0].description as string,
+              salesPrice: orderCreated?.products[0].salesPrice as number,
+              createdAt: orderCreated?.products[0].createdAt,
+              updatedAt: orderCreated?.products[0].updatedAt,
             })
           ),
         ])
@@ -142,12 +142,12 @@ describe("OrderRepository test", () => {
         expect.arrayContaining([
           expect.objectContaining(
             new Product({
-              id: orderCreated.products[1].id,
-              name: orderCreated.products[1].name,
-              description: orderCreated.products[1].description,
-              salesPrice: orderCreated.products[1].salesPrice,
-              createdAt: orderCreated.products[1].createdAt,
-              updatedAt: orderCreated.products[1].updatedAt,
+              id: orderCreated?.products[1].id,
+              name: orderCreated?.products[1].name as string,
+              description: orderCreated?.products[1].description as string,
+              salesPrice: orderCreated?.products[1].salesPrice as number,
+              createdAt: orderCreated?.products[1].createdAt,
+              updatedAt: orderCreated?.products[1].updatedAt,
             })
           ),
         ])
@@ -262,25 +262,24 @@ describe("OrderRepository test", () => {
         include: [OrderProductModel, ProductModel, ClientModel],
       });
 
-      console.log(order.status, orderUpdated.status);
-      expect(order.id.value).toEqual(orderUpdated.id);
-      expect(order.status).toEqual(orderUpdated.status);
+      expect(order.id.value).toEqual(orderUpdated?.id);
+      expect(order.status).toEqual(orderUpdated?.status);
       expect(order.total).toEqual(300);
 
-      expect(order.client.id.value).toEqual(orderUpdated.client.id);
-      expect(order.client.name).toEqual(orderUpdated.client.name);
-      expect(order.client.address).toEqual(orderUpdated.client.street);
+      expect(order.client.id.value).toEqual(orderUpdated?.client.id);
+      expect(order.client.name).toEqual(orderUpdated?.client.name);
+      expect(order.client.address).toEqual(orderUpdated?.client.street);
 
       expect(order.products).toEqual(
         expect.arrayContaining([
           expect.objectContaining(
             new Product({
-              id: orderUpdated.products[0].id,
-              name: orderUpdated.products[0].name,
-              description: orderUpdated.products[0].description,
-              salesPrice: orderUpdated.products[0].salesPrice,
-              createdAt: orderUpdated.products[0].createdAt,
-              updatedAt: orderUpdated.products[0].updatedAt,
+              id: orderUpdated?.products[0].id,
+              name: orderUpdated?.products[0].name as string,
+              description: orderUpdated?.products[0].description as string,
+              salesPrice: orderUpdated?.products[0].salesPrice as number,
+              createdAt: orderUpdated?.products[0].createdAt,
+              updatedAt: orderUpdated?.products[0].updatedAt,
             })
           ),
         ])
@@ -289,12 +288,12 @@ describe("OrderRepository test", () => {
         expect.arrayContaining([
           expect.objectContaining(
             new Product({
-              id: orderUpdated.products[1].id,
-              name: orderUpdated.products[1].name,
-              description: orderUpdated.products[1].description,
-              salesPrice: orderUpdated.products[1].salesPrice,
-              createdAt: orderUpdated.products[1].createdAt,
-              updatedAt: orderUpdated.products[1].updatedAt,
+              id: orderUpdated?.products[1].id,
+              name: orderUpdated?.products[1].name as string,
+              description: orderUpdated?.products[1].description as string,
+              salesPrice: orderUpdated?.products[1].salesPrice as number,
+              createdAt: orderUpdated?.products[1].createdAt,
+              updatedAt: orderUpdated?.products[1].updatedAt,
             })
           ),
         ])
