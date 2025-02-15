@@ -1,4 +1,5 @@
 import {
+  BelongsToMany,
   Column,
   HasMany,
   HasOne,
@@ -8,6 +9,7 @@ import {
 } from "sequelize-typescript";
 import InvoiceAddressModel from "./invoice-address.model";
 import InvoiceItemModel from "./invoice-item.model";
+import ProductModel from "./product.model";
 
 @Table({
   tableName: "invoices",
@@ -29,10 +31,11 @@ export default class InvoiceModel extends Model {
   })
   declare address: InvoiceAddressModel;
 
-  @HasMany(() => InvoiceItemModel, {
-    foreignKey: "invoiceId",
-  })
-  declare items: InvoiceItemModel[];
+  @HasMany(() => InvoiceItemModel, "invoiceId")
+  declare invoiceItems: InvoiceItemModel[];
+
+  @BelongsToMany(() => ProductModel, () => InvoiceItemModel)
+  declare items: ProductModel[];
 
   @Column({ allowNull: false })
   declare createdAt: Date;

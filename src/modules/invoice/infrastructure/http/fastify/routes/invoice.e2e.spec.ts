@@ -4,10 +4,13 @@ import { Umzug } from "umzug";
 import { join } from "path";
 
 import { migrator } from "../../../../../../@shared/infrastructure/database/sequelize/migrator";
-import InvoiceModel from "../../../../repository/invoice.model";
+
 import InvoiceItemModel from "../../../../repository/invoice-item.model";
 import InvoiceAddressModel from "../../../../repository/invoice-address.model";
 import fastifyServer from "../../../../../../@shared/infrastructure/http/fastify";
+import ProductModel from "../../../../repository/product.model";
+import Id from "../../../../../../@shared/domain/value-object/id.value-object";
+import InvoiceModel from "../../../../repository/invoice.model";
 
 describe("Invoice e2e tests", () => {
   let sequelize: Sequelize;
@@ -44,6 +47,24 @@ describe("Invoice e2e tests", () => {
 
   describe("[GET] /invoices/:invoiceId", () => {
     it("should return a invoice", async () => {
+      const productCreated1 = await ProductModel.create({
+        id: "1",
+        name: "Teste",
+        description: "Teste",
+        salesPrice: 300,
+        stock: 10,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      const productCreated2 = await ProductModel.create({
+        id: "2",
+        name: "Teste 2",
+        description: "Teste 2",
+        salesPrice: 500,
+        stock: 15,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
       const invoiceCreated = await InvoiceModel.create(
         {
           id: "d09dbd03-a6ea-4264-a60b-5be6fced832e",
@@ -58,27 +79,21 @@ describe("Invoice e2e tests", () => {
             zipCode: "12333",
             createdAt: new Date(),
           },
-          items: [
+          invoiceItems: [
             {
-              id: "a58e8d8b-37ed-475c-9389-aea372f2285c",
-              name: "Invoice Item 1",
-              price: 10,
-              createdAt: new Date(),
-              updatedAt: new Date(),
+              id: new Id().value,
+              productId: productCreated1.id,
             },
             {
-              id: "aae45ec1-9ed1-47ae-94e3-2a36f94fd90d",
-              name: "Invoice Item 2",
-              price: 140,
-              createdAt: new Date(),
-              updatedAt: new Date(),
+              id: new Id().value,
+              productId: productCreated2.id,
             },
           ],
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          include: [InvoiceAddressModel, InvoiceItemModel],
+          include: [InvoiceAddressModel, InvoiceItemModel, ProductModel],
         }
       );
 
@@ -110,18 +125,18 @@ describe("Invoice e2e tests", () => {
       expect(invoiceReturned.items).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            id: invoiceCreated.items[0].id,
-            name: invoiceCreated.items[0].name,
-            price: invoiceCreated.items[0].price,
+            id: productCreated1.id,
+            name: productCreated1.name,
+            price: productCreated1.salesPrice,
           }),
         ])
       );
       expect(invoiceReturned.items).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
-            id: invoiceCreated.items[1].id,
-            name: invoiceCreated.items[1].name,
-            price: invoiceCreated.items[1].price,
+            id: productCreated2.id,
+            name: productCreated2.name,
+            price: productCreated2.salesPrice,
           }),
         ])
       );

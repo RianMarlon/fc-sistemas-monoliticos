@@ -4,6 +4,9 @@ import InvoiceAddressModel from "../repository/invoice-address.model";
 import InvoiceItemModel from "../repository/invoice-item.model";
 import InvoiceModel from "../repository/invoice.model";
 import { InvoiceFacadeFactory } from "../factory/invoice.facade.factory";
+import ProductModel from "../repository/product.model";
+import Id from "../../../@shared/domain/value-object/id.value-object";
+import InvoiceItem from "../domain/invoice-item.entity";
 
 describe("InvoiceFacade test ", () => {
   let sequelize: Sequelize;
@@ -15,7 +18,12 @@ describe("InvoiceFacade test ", () => {
       logging: false,
     });
 
-    sequelize.addModels([InvoiceModel, InvoiceItemModel, InvoiceAddressModel]);
+    sequelize.addModels([
+      InvoiceModel,
+      InvoiceItemModel,
+      InvoiceAddressModel,
+      ProductModel,
+    ]);
     await sequelize.sync();
   });
 
@@ -25,6 +33,24 @@ describe("InvoiceFacade test ", () => {
 
   describe("findInvoice", () => {
     it("should find an invoice", async () => {
+      const productCreated1 = await ProductModel.create({
+        id: "1",
+        name: "Teste",
+        description: "Teste",
+        salesPrice: 866,
+        stock: 10,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      const productCreated2 = await ProductModel.create({
+        id: "2",
+        name: "Teste 2",
+        description: "Teste 2",
+        salesPrice: 83,
+        stock: 15,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
       const invoiceFacade = InvoiceFacadeFactory.create();
 
       const input = {
@@ -41,27 +67,21 @@ describe("InvoiceFacade test ", () => {
           zipCode: "22983",
           createdAt: new Date(),
         },
-        items: [
+        invoiceItems: [
           {
-            id: "1",
-            name: "Item 1",
-            price: 82,
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            id: new Id().value,
+            productId: productCreated1.id,
           },
           {
-            id: "2",
-            name: "Item 2",
-            price: 210,
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            id: new Id().value,
+            productId: productCreated2.id,
           },
         ],
         createdAt: new Date(),
         updatedAt: new Date(),
       };
       await InvoiceModel.create(input, {
-        include: [InvoiceItemModel, InvoiceAddressModel],
+        include: [InvoiceItemModel, InvoiceAddressModel, ProductModel],
       });
 
       const result = await invoiceFacade.findInvoice({
@@ -76,18 +96,48 @@ describe("InvoiceFacade test ", () => {
       expect(result.address.city).toEqual(input.address.city);
       expect(result.address.state).toEqual(input.address.state);
       expect(result.address.zipCode).toEqual(input.address.zipCode);
-      expect(result.items[0].id).toEqual(input.items[0].id);
-      expect(result.items[0].name).toEqual(input.items[0].name);
-      expect(result.items[0].price).toEqual(input.items[0].price);
-      expect(result.items[1].id).toEqual(input.items[1].id);
-      expect(result.items[1].name).toEqual(input.items[1].name);
-      expect(result.items[1].price).toEqual(input.items[1].price);
-      expect(result.total).toEqual(292);
+      expect(result.items).toEqual(
+        expect.arrayContaining([
+          {
+            id: productCreated1.id,
+            name: productCreated1.name,
+            price: productCreated1.salesPrice,
+          },
+        ])
+      );
+      expect(result.items).toEqual(
+        expect.arrayContaining([
+          {
+            id: productCreated2.id,
+            name: productCreated2.name,
+            price: productCreated2.salesPrice,
+          },
+        ])
+      );
+      expect(result.total).toEqual(949);
     });
   });
 
   describe("generate", () => {
     it("should generate an invoice", async () => {
+      const productCreated1 = await ProductModel.create({
+        id: "1",
+        name: "Teste",
+        description: "Teste",
+        salesPrice: 500,
+        stock: 10,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      const productCreated2 = await ProductModel.create({
+        id: "2",
+        name: "Teste 2",
+        description: "Teste 2",
+        salesPrice: 700,
+        stock: 15,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
       const invoiceFacade = InvoiceFacadeFactory.create();
 
       const input = {
@@ -101,14 +151,14 @@ describe("InvoiceFacade test ", () => {
         zipCode: "294892",
         items: [
           {
-            id: "292",
-            name: "Item 1",
-            price: 200,
+            id: productCreated1.id,
+            name: productCreated1.name,
+            price: productCreated1.salesPrice,
           },
           {
-            id: "633",
-            name: "Item 2",
-            price: 3400,
+            id: productCreated2.id,
+            name: productCreated2.name,
+            price: productCreated2.salesPrice,
           },
         ],
       };
@@ -127,7 +177,7 @@ describe("InvoiceFacade test ", () => {
       expect(result.items[1].id).toEqual(input.items[1].id);
       expect(result.items[1].name).toEqual(input.items[1].name);
       expect(result.items[1].price).toEqual(input.items[1].price);
-      expect(result.total).toEqual(3600);
+      expect(result.total).toEqual(1200);
     });
   });
 });

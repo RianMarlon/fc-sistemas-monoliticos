@@ -6,6 +6,7 @@ import { InvoiceGateway } from "../gateway/invoice.gateway";
 import InvoiceAddressModel from "./invoice-address.model";
 import InvoiceItemModel from "./invoice-item.model";
 import InvoiceModel from "./invoice.model";
+import ProductModel from "./product.model";
 
 export class InvoiceRepository implements InvoiceGateway {
   async find(id: string): Promise<Invoice> {
@@ -13,7 +14,7 @@ export class InvoiceRepository implements InvoiceGateway {
       where: {
         id,
       },
-      include: [InvoiceItemModel, InvoiceAddressModel],
+      include: [InvoiceItemModel, InvoiceAddressModel, ProductModel],
     });
 
     if (!invoice) {
@@ -37,7 +38,9 @@ export class InvoiceRepository implements InvoiceGateway {
           new InvoiceItem({
             id: item.id,
             name: item.name,
-            price: item.price,
+            price: item.salesPrice,
+            createdAt: item.createdAt,
+            updatedAt: item.updatedAt,
           })
       ),
       createdAt: invoice.createdAt,
@@ -62,20 +65,18 @@ export class InvoiceRepository implements InvoiceGateway {
           zipCode: invoice.address.zipCode,
           createdAt: invoice.address.createdAt,
         },
-        items: invoice.items.map((item) => {
+        invoiceItems: invoice.items.map((product) => {
+          const invoiceItemId = new Id();
           return {
-            id: item.id.value,
-            name: item.name,
-            price: item.price,
-            createdAt: item.createdAt,
-            updatedAt: item.updatedAt,
+            id: invoiceItemId.value,
+            productId: product.id.value,
           };
         }),
         createdAt: invoice.createdAt,
         updatedAt: invoice.updatedAt,
       },
       {
-        include: [InvoiceItemModel, InvoiceAddressModel],
+        include: [InvoiceItemModel, InvoiceAddressModel, ProductModel],
       }
     );
   }
